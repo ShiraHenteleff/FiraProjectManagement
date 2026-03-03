@@ -1,0 +1,12 @@
+<div>
+  <div class="board-header">
+    <H1>{{board().name}}</H1>
+    <button (click)="openNewTaskModal()">Add Task</button>
+  </div>
+  <div class="status-columns">
+    @for(column of board().columns; track column.id) {
+      <board-column [column]="column"></board-column>
+    }
+  </div>
+
+</div>

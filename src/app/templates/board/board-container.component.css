@@ -1,0 +1,15 @@
+.board-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-right: 6%;
+  padding-left: 6%;
+}
+
+.status-columns{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-around;
+}
