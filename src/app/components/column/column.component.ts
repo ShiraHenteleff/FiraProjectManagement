@@ -13,9 +13,9 @@ import { TaskCardComponent } from '../task-card-component/task-card-component';
 export class ColumnComponent {
   store = inject(Store);
   column = input.required<Column>();
+  columnId = computed(() => this.column().id);
 
   tasks = computed(() => {
-    console.log(this.column().id);
-    return this.store.selectSignal(selectTaskByColumnId(this.column().id))();
+    return this.store.selectSignal(selectTaskByColumnId(this.columnId()))();
   });
 }

@@ -1,7 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { BoardActions } from './board.actions';
 import { Board } from '../../interfaces/board.interface';
-import * as fromTask from './tasks/task.reducer';
 import { Task } from '../../interfaces/task.interface';
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { TaskActions } from './tasks/task.actions';
@@ -51,6 +50,17 @@ export const reducer = createReducer(
     ...state,
      Tasks: adapter.addOne(action.task, state.Tasks)
   })),
+  on(TaskActions.moveTask, (state, action) => ({
+    ...state,
+    Tasks: adapter.updateOne({
+      id: action.taskId,
+      changes: {
+        columnId: action.newColumnId,
+      }
+    },
+      state.Tasks
+    ),
+  }))
 );
 
 export const boardFeature = createFeature({

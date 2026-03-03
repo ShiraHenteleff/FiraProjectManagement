@@ -9,6 +9,11 @@
     <div>{{task().description}}</div>
   }
 
-
+  <select [formControl]="selectedColumn" (change)="onColumnChange()">
+    <option value="" disabled selected>move card</option>
+    @for (column of columnOptions(); track column.id) {
+      <option [value]="column.id">{{column.name}}</option>
+    }
+  </select>
 
 </div>
