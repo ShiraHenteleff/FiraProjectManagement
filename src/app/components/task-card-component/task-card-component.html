@@ -1,0 +1,14 @@
+<div class="task-card">
+  <div>{{task().title}}</div>
+
+  @if (task().assignee) {
+    <div>Assignee: {{task().assignee}}</div>
+  }
+
+  @if (task().description) {
+    <div>{{task().description}}</div>
+  }
+
+
+
+</div>
