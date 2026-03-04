@@ -2,6 +2,9 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromBoard from './board.reducer';
 import { adapter } from './board.reducer';
 import { Task } from '../../interfaces/task.interface';
+import { ProgressWidgetData } from '../../interfaces/progress-widget-data.interface';
+import { TaskCountByPriority } from '../../interfaces/task-by-priority.interface';
+import { Priority } from '../../interfaces/priority.type';
 
 export const selectBoardState = createFeatureSelector<fromBoard.State>(fromBoard.boardFeatureKey);
 
@@ -38,22 +41,43 @@ createSelector(taskSelectors.selectAll, (tasks) => {
 
 export const selectTaskCountByPriority = createSelector(
   taskSelectors.selectAll,
-  (tasks) => {
-    return tasks.reduce<Partial<Record<Task['priority'], number>>>((counts, task) => {
-      counts[task.priority] = (counts[task.priority] ?? 0) + 1;
-      return counts;
-    }, {});
+  (tasks): TaskCountByPriority => {
+    return tasks.reduce<TaskCountByPriority>(
+      (counts, task) => {
+        counts[task.priority] += 1;
+        return counts;
+      },
+      {
+        urgent: 0,
+        high: 0,
+        medium: 0,
+        low: 0,
+      },
+    );
   },
 );
+
+export const selectCountForSinglePriority = (priority: Priority) =>
+createSelector(selectTaskCountByPriority, (tasksByPriority) => {
+  return tasksByPriority[priority];
+});
 
 export const selectTaskCompletionAmount = createSelector(
   taskSelectors.selectAll,
   selectLastColumnId,
-  (tasks, lastColumnId) => {
+  (tasks, lastColumnId): ProgressWidgetData => {
     return {
-      totalTasks: tasks.length,
-      finishedTasks: tasks.filter((task) => {return task.columnId === lastColumnId}).length,
-    }
+      totalCount: tasks.length,
+      completedCount: tasks.filter((task) => {
+        return task.columnId === lastColumnId;
+      }).length,
+    };
   }
 );
 
+export const selectGlobalError = createSelector(
+  selectBoardState,
+  (state) => {
+    return state.GlobalError;
+  }
+);

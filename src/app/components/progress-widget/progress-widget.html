@@ -1,0 +1,6 @@
+<widget-base [widgetStatus]="widgetStatus()">
+  <div>
+    <div>{{progressPercent()}} % complete</div>
+    <mat-progress-bar mode="determinate" [value]="progressPercent()"></mat-progress-bar>
+  </div>
+</widget-base>

@@ -1,0 +1,8 @@
+<div class="widget-card"
+     [ngClass]="widgetStatus().status"
+     [matTooltip]="widgetStatus().tooltipText"
+     matTooltipPosition="above"
+     matTooltipShowDelay="500"
+>
+  <ng-content/>
+</div>

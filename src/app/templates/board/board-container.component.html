@@ -3,14 +3,17 @@
     <H1>{{board().name}}</H1>
     <button (click)="openNewTaskModal()">Add Task</button>
   </div>
+
+  <div class="widget-row">
+    <dynamic-widgets-component></dynamic-widgets-component>
+  </div>
+
   <div class="status-columns">
     @for(column of board().columns; track column.id) {
       <board-column [column]="column"></board-column>
     }
   </div>
 
-<!--  {{taskCountByPriority() | json}}-->
-<!--  {{selectLastColumnId() | json}}-->
-<!--  {{selectTaskCompletionAmount() | json}}-->
+  <global-error-component></global-error-component>
 
 </div>

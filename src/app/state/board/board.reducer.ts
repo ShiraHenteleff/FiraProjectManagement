@@ -10,6 +10,7 @@ export const boardFeatureKey = 'board';
 export interface State {
   BoardDetails: Board;
   Tasks: EntityState<Task>;
+  GlobalError: string;
 }
 
 export const adapter: EntityAdapter<Task> = createEntityAdapter<Task>();
@@ -37,11 +38,15 @@ export const initialState: State = {
     name: 'Project 1',
   },
   Tasks: adapter.getInitialState(),
+  GlobalError: ''
 };
 
 export const reducer = createReducer(
   initialState,
-  on(BoardActions.boardBoards, (state) => state),
+  on(BoardActions.clearError, (state) => ({
+    ...state,
+    GlobalError: '',
+  })),
   on(TaskActions.loadTasks, (state, action) => ({
     ...state,
     Tasks: adapter.setAll(action.tasks, state.Tasks),
@@ -54,7 +59,7 @@ export const reducer = createReducer(
     ...state,
     Tasks: adapter.updateOne(
       {
-        id: action.taskId,
+        id: action.task.id,
         changes: {
           columnId: action.newColumnId,
         },
@@ -62,12 +67,37 @@ export const reducer = createReducer(
       state.Tasks,
     ),
   })),
-  on(TaskActions.updateTask, (state, action) => ({
+  on(TaskActions.moveTaskSuccess, (state, action) => ({
     ...state,
     Tasks: adapter.updateOne(
-      action.task,
+      {
+        id: action.task.id,
+        changes: {
+          lastVerifiedData: {
+            ...action.task.lastVerifiedData,
+            columnId: action.newColumnId,
+          },
+        },
+      },
       state.Tasks,
     ),
+  })),
+  on(TaskActions.moveTaskError, (state, action) => ({
+    ...state,
+    Tasks: adapter.updateOne(
+      {
+        id: action.task.id,
+        changes: {
+          columnId: action.task.lastVerifiedData.columnId,
+        },
+      },
+      state.Tasks,
+    ),
+    GlobalError: 'Move task operation failed. Please check your connection and try again.',
+  })),
+  on(TaskActions.updateTask, (state, action) => ({
+    ...state,
+    Tasks: adapter.updateOne(action.task, state.Tasks),
   })),
   on(TaskActions.deleteTask, (state, action) => ({
     ...state,

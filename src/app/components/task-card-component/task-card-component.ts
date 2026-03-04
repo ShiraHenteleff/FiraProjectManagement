@@ -20,6 +20,11 @@ export class TaskCardComponent {
   readonly dialog = inject(MatDialog);
 
   columnOptions = this.store.selectSignal(selectColumnOptions);
+
+  filteredColumnOptions = computed(() =>
+    this.columnOptions().filter((column) => column.id !== this.task().columnId)
+  );
+
   selectedColumn = new FormControl('', { nonNullable: true });
 
   isSeeMoreExpanded = signal(false);
@@ -51,7 +56,7 @@ export class TaskCardComponent {
   onColumnChange() {
     this.store.dispatch(
       TaskActions.moveTask({
-        taskId: this.task().id,
+        task: this.task(),
         newColumnId: this.selectedColumn.getRawValue(),
       }),
     );

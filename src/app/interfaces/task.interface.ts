@@ -5,4 +5,7 @@ export interface Task extends BaseTask {
   columnId: string;
   createdAt: Date;
   updatedAt: Date;
+  lastVerifiedData : {
+    columnId: string;
+  }
 }

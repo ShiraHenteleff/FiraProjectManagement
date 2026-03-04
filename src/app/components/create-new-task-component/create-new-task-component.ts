@@ -25,6 +25,9 @@ export class CreateNewTaskComponent {
           columnId: '1',
           createdAt: new Date(),
           updatedAt: new Date(),
+          lastVerifiedData: {
+            columnId: '1',
+          },
         },
       }),
     );

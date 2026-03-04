@@ -25,7 +25,7 @@
   <div class="action-row">
     <select [formControl]="selectedColumn" (change)="onColumnChange()">
       <option value="" disabled selected>Change Status</option>
-      @for (column of columnOptions(); track column.id) {
+      @for (column of filteredColumnOptions(); track column.id) {
         <option [value]="column.id">{{column.name}}</option>
       }
     </select>

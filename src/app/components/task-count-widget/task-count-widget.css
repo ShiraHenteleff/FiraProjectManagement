@@ -1,0 +1,12 @@
+.count-by-priority-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .count-text {
+    font-size: 48px;
+    font-weight: bold;
+    line-height: normal;
+  }
+}

@@ -8,14 +8,10 @@ export const TaskActions = createActionGroup({
   events: {
     'Load Tasks': props<{ tasks: Task[] }>(),
     'Add Task': props<{ task: Task }>(),
-    'Move Task': props<{ taskId: string, newColumnId: string }>(),
-    'Upsert Task': props<{ task: Task }>(),
-    'Add Tasks': props<{ tasks: Task[] }>(),
-    'Upsert Tasks': props<{ tasks: Task[] }>(),
+    'Move Task': props<{ task: Task; newColumnId: string }>(),
+    'Move Task Success': props<{ task: Task; newColumnId: string }>(),
+    'Move Task Error': props<{ task: Task }>(),
     'Update Task': props<{ task: Update<Task> }>(),
-    'Update Tasks': props<{ tasks: Update<Task>[] }>(),
-    'Delete Task': props<{ id: string }>(),
-    'Delete Tasks': props<{ ids: string[] }>(),
-    'Clear Tasks': emptyProps(),
+    'Delete Task': props<{ id: string }>()
   },
 });

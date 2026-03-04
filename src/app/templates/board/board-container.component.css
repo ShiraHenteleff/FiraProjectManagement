@@ -11,5 +11,15 @@
   flex-direction: row;
   width: 100%;
   align-items: flex-start;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  margin-top: 30px;
+}
+
+.widget-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
