@@ -1,9 +1,8 @@
-import { Component, inject, Signal, signal } from '@angular/core';
-import { selectBoardDetails, taskSelectors } from '../../state/board/board.selectors';
+import { Component, inject, Signal } from '@angular/core';
+import { selectBoardDetails, selectLastColumnId, selectTaskCompletionAmount, selectTaskCountByPriority, taskSelectors } from '../../state/board/board.selectors';
 import { Store } from '@ngrx/store';
 import { Board } from '../../interfaces/board.interface';
 import { TaskActions } from '../../state/board/tasks/task.actions';
-import { TaskState } from 'vitest';
 import { Task } from '../../interfaces/task.interface';
 import { ColumnComponent } from '../../components/column/column.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -20,6 +19,9 @@ export class BoardContainer {
   board: Signal<Board> = this.store.selectSignal(selectBoardDetails);
   tasks: Signal<Task[]> = this.store.selectSignal(taskSelectors.selectAll);
   readonly dialog = inject(MatDialog);
+  taskCountByPriority = this.store.selectSignal(selectTaskCountByPriority);
+  selectLastColumnId = this.store.selectSignal(selectLastColumnId);
+  selectTaskCompletionAmount = this.store.selectSignal(selectTaskCompletionAmount);
 
   ngOnInit() {
     this.store.dispatch(
@@ -40,7 +42,7 @@ export class BoardContainer {
             id: crypto.randomUUID(),
             title: 'Task 2',
             columnId: '1',
-            priority: 'urgent',
+            priority: 'medium',
             description: 'Investigate why the bug only appears when someone important is watching.',
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -49,7 +51,7 @@ export class BoardContainer {
             id: crypto.randomUUID(),
             title: 'Task 3',
             columnId: '2',
-            priority: 'urgent',
+            priority: 'high',
             description:
               'Optimise performance until the app loads before the user even thinks about opening it.',
             createdAt: new Date(),
@@ -59,7 +61,7 @@ export class BoardContainer {
             id: crypto.randomUUID(),
             title: 'Task 4',
             columnId: '3',
-            priority: 'urgent',
+            priority: 'low',
             description: 'Make the button blue. Not that blue. The other blue.',
             createdAt: new Date(),
             updatedAt: new Date(),

@@ -30,7 +30,7 @@ export const initialState: State = {
       {
         id: '3',
         name: 'Done',
-        index: 1,
+        index: 2,
       },
     ],
     id: '',
@@ -48,19 +48,31 @@ export const reducer = createReducer(
   })),
   on(TaskActions.addTask, (state, action) => ({
     ...state,
-     Tasks: adapter.addOne(action.task, state.Tasks)
+    Tasks: adapter.addOne(action.task, state.Tasks),
   })),
   on(TaskActions.moveTask, (state, action) => ({
     ...state,
-    Tasks: adapter.updateOne({
-      id: action.taskId,
-      changes: {
-        columnId: action.newColumnId,
-      }
-    },
-      state.Tasks
+    Tasks: adapter.updateOne(
+      {
+        id: action.taskId,
+        changes: {
+          columnId: action.newColumnId,
+        },
+      },
+      state.Tasks,
     ),
-  }))
+  })),
+  on(TaskActions.updateTask, (state, action) => ({
+    ...state,
+    Tasks: adapter.updateOne(
+      action.task,
+      state.Tasks,
+    ),
+  })),
+  on(TaskActions.deleteTask, (state, action) => ({
+    ...state,
+    Tasks: adapter.removeOne(action.id, state.Tasks),
+  })),
 );
 
 export const boardFeature = createFeature({

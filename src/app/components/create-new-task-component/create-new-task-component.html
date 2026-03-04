@@ -1,17 +1,5 @@
 <div class="new-task-modal-content">
   <h3>Create a new task</h3>
 
-  <form class="new-task-form" [formGroup]="newTaskForm" (ngSubmit)="onSubmit()">
-    <input type="text" placeholder="Title" required formControlName="title">
-    <textarea placeholder="Description" formControlName="description"></textarea>
-    <input type="text" placeholder="Assignee" formControlName="assignee">
-    <select name="priority" formControlName="priority" required>
-      <option value="urgent">Urgent</option>
-      <option value="high">High</option>
-      <option value="medium">Medium</option>
-      <option value="low">Low</option>
-    </select>
-
-    <input [disabled]="newTaskForm.invalid" type="submit">
-  </form>
+  <task-form-component (submitTask)="onSubmit($event)"></task-form-component>
 </div>

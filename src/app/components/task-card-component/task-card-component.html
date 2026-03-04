@@ -1,19 +1,39 @@
 <div class="task-card">
-  <div>{{task().title}}</div>
+  <div class="card-header">
+    <h4>{{task().title}}</h4>
+    <span class="status-badge" [ngClass]="statusBadgeClass()">{{ task().priority }}</span>
+  </div>
 
   @if (task().assignee) {
-    <div>Assignee: {{task().assignee}}</div>
+    <div><b>Assignee:</b> {{task().assignee}}</div>
   }
 
   @if (task().description) {
     <div>{{task().description}}</div>
   }
 
-  <select [formControl]="selectedColumn" (change)="onColumnChange()">
-    <option value="" disabled selected>move card</option>
-    @for (column of columnOptions(); track column.id) {
-      <option [value]="column.id">{{column.name}}</option>
-    }
-  </select>
+  @if (isSeeMoreExpanded()) {
+    <div class="date-info">
+      <span>Created At: {{task().createdAt.toLocaleString()}}</span>
+      <span>Updated At: {{task().updatedAt.toLocaleString()}}</span>
+    </div>
+  }
+
+  <button class="text-button" (click)="onSeeMoreClick()">{{seeMoreButtonText()}}</button>
+
+
+  <div class="action-row">
+    <select [formControl]="selectedColumn" (change)="onColumnChange()">
+      <option value="" disabled selected>Change Status</option>
+      @for (column of columnOptions(); track column.id) {
+        <option [value]="column.id">{{column.name}}</option>
+      }
+    </select>
+
+    <span>
+      <button (click)="openEditTaskModal()">Edit</button>
+      <button (click)="onDelete()">Delete</button>
+    </span>
+  </div>
 
 </div>

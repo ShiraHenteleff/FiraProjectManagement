@@ -3,4 +3,59 @@
   padding: 10px;
   border-radius: 6px;
   width: 300px;
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .status-badge {
+      border-radius: 20px;
+      border: solid;
+      padding: 4px;
+    }
+
+    .status-red {
+      border: 1px solid #dc3545;
+      background-color: #f8d7da;
+      color: #842029;
+    }
+
+    .status-orange {
+      border: 1px solid #fd7e14;
+      background-color: #ffe5d0;
+      color: #7a3e00;
+    }
+
+    .status-yellow {
+      border: 1px solid #d4a017;
+      background-color: #fff3cd;
+      color: #664d03;
+    }
+
+    .status-green {
+      border: 1px solid #198754;
+      background-color: #d1e7dd;
+      color: #0f5132;
+    }
+  }
+
+  .date-info {
+    display: flex;
+    flex-direction: column;
+    color: grey;
+    font-style: italic;
+    margin-top: 10px;
+  }
+
+  .text-button {
+    margin-top: 10px;
+  }
+
+  .action-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
 }

@@ -1,0 +1,15 @@
+:host {
+  width: 100%;
+}
+
+.new-task-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+
+  textarea {
+    resize: vertical;
+    height: 100px;
+  }
+}

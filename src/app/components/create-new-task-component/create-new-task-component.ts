@@ -1,35 +1,26 @@
 import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { TaskActions } from '../../state/board/tasks/task.actions';
 import { MatDialogRef } from '@angular/material/dialog';
-
-class DialogOverviewExampleDialog {}
+import { TaskFormComponent } from '../../base-components/task-form-component/task-form-component';
+import { BaseTask } from '../../interfaces/base-task.interface';
 
 @Component({
   selector: 'app-create-new-task-component',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TaskFormComponent],
   templateUrl: './create-new-task-component.html',
   styleUrl: './create-new-task-component.css',
 })
 export class CreateNewTaskComponent {
   store = inject(Store);
-  readonly dialogRef = inject(MatDialogRef<DialogOverviewExampleDialog>);
+  readonly dialogRef = inject(MatDialogRef<CreateNewTaskComponent>);
 
-  newTaskForm = new FormGroup({
-    title: new FormControl('', { nonNullable: true }),
-    description: new FormControl('', { nonNullable: true }),
-    assignee: new FormControl('', { nonNullable: true }),
-    priority: new FormControl<'medium' | 'urgent' | 'high' | 'low'>('medium', {
-      nonNullable: true,
-    }),
-  });
-
-  onSubmit() {
+  onSubmit(newTask: BaseTask) {
     this.store.dispatch(
       TaskActions.addTask({
         task: {
-          ...this.newTaskForm.getRawValue(),
+          ...newTask,
           id: crypto.randomUUID(),
           columnId: '1',
           createdAt: new Date(),
