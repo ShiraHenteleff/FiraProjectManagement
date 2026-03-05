@@ -4,7 +4,7 @@ import { Task } from '../../../interfaces/task.interface';
 
 
 export const TaskActions = createActionGroup({
-  source: 'Task/API',
+  source: 'Tasks',
   events: {
     'Load Tasks': props<{ tasks: Task[] }>(),
     'Add Task': props<{ task: Task }>(),

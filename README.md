@@ -10,50 +10,47 @@ To start a local development server, run:
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Once the server is running, open your browser and navigate to `http://localhost:4200/boards/12345`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+## Architecture
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Currently, the files in the project are organized into a few separate directories (that are easily extractable to libraries should the project grow):
 
-```bash
-ng generate component component-name
-```
+- <b>base-components:</b> Contains reusable, dumb components
+- <b>components:</b> Container components that have some business logic
+- <b>templates:</b> Top level components that compose the layout for the overall page
+- <b>interfaces:</b> Used for typing across the project
+- <b>services:</b> Services for connecting to the api
+- <b>state:</b> The files that drive the NGRX store
+- <b>directives:</b> What it says on the tin
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Scalability Patterns
 
-```bash
-ng generate --help
-```
+- Multiple boards:
+The easiest way to achieve this is to let the api handle all the logic to separate the boards, and have them be on different pages in the UI. 
+If we need to display multiple boards on the same page, and maintain a global state, I see two different ways of doing this.
+  1. Create a list of boards that each have a nested list of tasks. Both lists could be managed via NGRX entities. (See [this article](https://timdeschryver.dev/blog/nested-ngrx-entity-state)).
+  This lets us keep tasks separate based on board so we are dealing with smaller lists.
+  2. Have a list of boards and a "pooled" list of tasks that all boards share. This is the better option if we want to be able to move tasks between boards easily.
 
-## Building
+Note: I would also want to look into using signal store for this, as I believe it can operate at the component level, so having multiple boards would be as easy as making more instances of the component.
 
-To build the project run:
+- Real-time collaboration (WebSocket updates): 
+We could implement collaboration by subscribing to a websocket and dispatching actions to our NGRX store with the updated data.
 
-```bash
-ng build
-```
+- Undo/redo functionality: To build undo/redo functionality, we could add a meta-reducer to build a changelog of task related actions, and then traverse that list and reverse/reperform those actions as we go.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+- Offline support: Similar to undo/redo, we could save a copy of all changes since our last sync, and when we are successfully able to sync again, reset the changelog to baseline. We could use local storage to 
+make sure changes made offline are not lost on refresh.
 
-## Running unit tests
+## Tradeoffs
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Store Structure
 
-```bash
-ng test
-```
+## AI Usage
 
-## Running end-to-end tests
+This code base is about 90% - 95% human written. I did use AI to assist with generating some CSS, to help with research, and to speed up debugging.
 
-For end-to-end (e2e) testing, run:
 
-```bash
-ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

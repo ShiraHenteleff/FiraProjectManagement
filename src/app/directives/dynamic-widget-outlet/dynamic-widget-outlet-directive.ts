@@ -4,6 +4,7 @@ import {
   inject,
   input,
   inputBinding,
+  OnInit,
   outputBinding,
   Type,
   ViewContainerRef,
@@ -13,7 +14,7 @@ import { ComponentToRender } from '../../interfaces/component-to-render.interfac
 @Directive({
   selector: '[DynamicWidgetOutletDirective]',
 })
-export class DynamicWidgetOutletDirective {
+export class DynamicWidgetOutletDirective implements OnInit {
   constructor() {}
   private viewContainerRef = inject(ViewContainerRef);
   componentsToRender = input.required<ComponentToRender<any, any>[]>();

@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal, Signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, Signal } from '@angular/core';
 import {
   selectBoardDetails
 } from '../../state/board/board.selectors';
@@ -21,7 +21,7 @@ import { DynamicWidgetsComponent } from '../../components/dynamic-widgets-compon
   templateUrl: './board-container.component.html',
   styleUrl: './board-container.component.css',
 })
-export class BoardContainer {
+export class BoardContainer implements OnInit {
   private readonly store = inject(Store);
   board: Signal<Board> = this.store.selectSignal(selectBoardDetails);
   readonly dialog = inject(MatDialog);
