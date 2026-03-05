@@ -10,6 +10,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { ComponentToRender } from '../../interfaces/component-to-render.interface';
+import { ProgressWidgetData } from '../../interfaces/progress-widget-data.interface';
 
 @Directive({
   selector: '[DynamicWidgetOutletDirective]',
@@ -17,7 +18,7 @@ import { ComponentToRender } from '../../interfaces/component-to-render.interfac
 export class DynamicWidgetOutletDirective implements OnInit {
   constructor() {}
   private viewContainerRef = inject(ViewContainerRef);
-  componentsToRender = input.required<ComponentToRender<any, any>[]>();
+  componentsToRender = input.required<ComponentToRender<any, string | number | ProgressWidgetData>[]>();
 
   ngOnInit() {
     this.componentsToRender().forEach((component) => {

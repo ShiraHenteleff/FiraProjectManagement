@@ -15,5 +15,5 @@ type InputBinding<T> = {
 type OutputBinding = {
   type: string;
   name: string;
-  value: () => void;
+  value: (event: unknown) => unknown;
 };
