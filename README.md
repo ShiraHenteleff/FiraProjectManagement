@@ -67,12 +67,15 @@ We could implement collaboration by subscribing to a websocket and dispatching a
 make sure changes made offline are not lost on refresh.
 
 ## Tradeoffs
-- Most obviously, in a real application I wouldn't be dispatching the 'load tasks' event directly from the board-container component. I would set up a resolve guard that dispatched the action to an effect, that 
+- Most obviously, in a real application I wouldn't be dispatching the 'load tasks' event directly from the board-container component. I would set up a resolve guard that dispatched the action to an effect, and that 
 would get the board and task details.
 
 
 - To implement the optimistic updates, I've added my own metadata section to document the value last saved to the server. I did look into using the [entity change tracker](https://ngrx.io/guide/data/entity-change-tracker)
 from NGRX but that package is in maintenance mode and not recommended for new projects.
+
+
+- I ran out of time to add support for observable and static inputs for the dynamic widget outlet, but the application as it stands would not have needed those options.
 
 
 - I would normally include more validation on user inputs, like a dropdown for assignee, and definitely better CSS. 
