@@ -1,8 +1,8 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, untracked } from '@angular/core';
 import { Column } from '../../interfaces/column.interface';
 import { Store } from '@ngrx/store';
-import { selectTaskByColumnId } from '../../state/board/board.selectors';
 import { TaskCardComponent } from '../task-card-component/task-card-component';
+import { selectTaskByColumnId } from '../../state/board/tasks/task.selectors';
 
 @Component({
   selector: 'board-column',
@@ -16,6 +16,6 @@ export class ColumnComponent {
   columnId = computed(() => this.column().id);
 
   tasks = computed(() => {
-    return this.store.selectSignal(selectTaskByColumnId(this.columnId()))();
+    return this.store.selectSignal(selectTaskByColumnId(this.columnId()));
   });
 }

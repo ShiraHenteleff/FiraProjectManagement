@@ -1,13 +1,12 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { DynamicWidgetOutletDirective } from '../../directives/dynamic-widget-outlet/dynamic-widget-outlet-directive';
-import { TaskActions } from '../../state/board/tasks/task.actions';
 import { TaskCountWidget } from '../task-count-widget/task-count-widget';
+import { Store } from '@ngrx/store';
+import { ProgressWidget } from '../progress-widget/progress-widget';
 import {
   selectCountForSinglePriority,
   selectTaskCompletionAmount,
-} from '../../state/board/board.selectors';
-import { Store } from '@ngrx/store';
-import { ProgressWidget } from '../progress-widget/progress-widget';
+} from '../../state/board/tasks/task.selectors';
 
 @Component({
   selector: 'dynamic-widgets-component',

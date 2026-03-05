@@ -1,7 +1,7 @@
 <div>
   <h3>{{column().name}}</h3>
   <div class="task-column">
-    @for (task of tasks(); track task.id) {
+    @for (task of tasks()(); track task.id) {
       <task-card-component [task]="task"></task-card-component>
     }
   </div>
